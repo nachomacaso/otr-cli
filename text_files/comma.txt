@@ -1,0 +1,4 @@
+Schrute, Dwight, Male, Purple, 8/1/1975
+Bernard, Andy, Male, Black, 6/1/1982
+Malone, Kevin, Male, Yellow, 4/1/1983
+Martin, Angela, Female, Perrywinkle, 5/1/1978

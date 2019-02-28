@@ -1,0 +1,16 @@
+{
+  "name": "otr-cli",
+  "version": "1.0.0",
+  "description": "CLI utility to parse files",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "file-system": "^2.2.2",
+    "lodash": "^4.17.11"
+  }
+}
