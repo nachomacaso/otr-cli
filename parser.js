@@ -1,54 +1,37 @@
-var program = require('commander');
-var fs = require('file-system');
-var readline = require('readline');
-var _ = require('lodash');
+var fs = require('fs');
+var _  = require('lodash');
 
-var people = [];
-var keys = ['last', 'first', 'gender', 'color', 'dob'];
+if (process.argv.length !== 3) {
+    console.error('Exactly one argument required');
+    process.exit(1);
+}
 
-program
-  .version('0.0.1')
-  .option('-p, --parse', 'Text file parser')
-  .parse(process.argv)
+var input = process.argv[2];
+var output = './text_files/mock-data.txt';
+var people =[];
+var keys   = ['last', 'first', 'gender', 'color', 'dob'];
 
-var rd = readline.createInterface({
-  input: fs.createReadStream('./text_files/pipe.txt'),
-  console: false
-});
-
-rd.on('line', function(line) {
-  var values= line.split(' | ');
-  var obj = toObject(keys, values);
-  people.push(obj);
-});
-
-var rd2 = readline.createInterface({
-  input: fs.createReadStream('./text_files/comma.txt'),
-  console: false
-});
-
-rd2.on('line', function(line) {
-  var values= line.split(', ');
-  var obj = toObject(keys, values);
-  people.push(obj);
-});
-
-var rd3 = readline.createInterface({
-  input: fs.createReadStream('./text_files/space.txt'),
-  console: false
-});
-
-rd3.on('line', function(line) {
-  var values= line.split(' ');
-  var obj = toObject(keys, values);
-  people.push(obj);
+fs.readFile(input, 'utf-8', function (err, text) {
+    if (err) throw err;
+    var format = text.replace(/[\n]/g, ', ').replace(/[|,\n]/g, '').replace(/\s\s+/g, ' ');
+    var values = format.split(' ');
+    people = toObject(keys, values);
+    fs.writeFile(output, JSON.stringify(people), function (err) {
+        if (err) throw err;
+    });
 });
 
 function toObject(keys, values) {
-  var result = {};
-  for (var i = 0; i < values.length; i++)
-    result[keys[i]] = values[i];
-  return result;
+  var peopleArray = [];
+  for (var i = 0; i < values.length;){
+    var person = {};
+    for(var j =0; j < keys.length; j++) {
+      person[keys[j]] = values[i];
+      i++;
+    }
+    peopleArray.push(person);
+  }
+  return peopleArray
 }
 
 function sortByGenderAndLast() {

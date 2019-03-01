@@ -4,8 +4,7 @@
   "description": "CLI utility to parse files",
   "main": "parser.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node parser -p"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",

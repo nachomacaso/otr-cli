@@ -1,4 +1,12 @@
+Scott, Michael, Male, Blue, 1/1/1975
+Beesly, Pam, Female, Pink, 2/1/1985
+Halpert, Jim, Male, Green, 3/1/1980
+Vance, Phyllis, Female, Red, 4/1/1970
 Schrute, Dwight, Male, Purple, 8/1/1975
 Bernard, Andy, Male, Black, 6/1/1982
 Malone, Kevin, Male, Yellow, 4/1/1983
 Martin, Angela, Female, Perrywinkle, 5/1/1978
+Flenderson, Toby, Male, Gray, 3/1/1977
+Hannon, Erin, Female, Fushia, 9/1/1989
+Hudson, Stanley, Male, Orange, 6/1/1982
+Kapoor, Kelly, Female, Violet, 7/1/1990
