@@ -1,21 +1,21 @@
 const express = require('express');
 const cors = require('cors');
 var _  = require('lodash');
-// const JSON = require('circular-json');
 var fs = require('fs');
 
 const app = express();
 
 var mockData = [];
+var output = './text_files/mock-data.txt';
 
 fs.readFile('./text_files/mock-data.txt', "utf8", function (err, data) {
   if (err) throw err;
   mockData = JSON.parse(data);
-  // mockData = data;
 });
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   const html = `
@@ -27,7 +27,16 @@ app.get('/', (req, res) => {
 });
 
 app.post('/records', (req, res) => {
-  console.log(req);
+  if(!mockData){
+    return res.send('Error processing request');
+  } else {
+    mockData.push(req.body);
+    console.log(mockData);
+    fs.writeFile(output, JSON.stringify(mockData), function (err) {
+      if (err) throw err;
+    });
+    return res.send(mockData);
+  }
 });
 
 app.get('/records/gender', (req, res) => {
