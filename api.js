@@ -1,23 +1,21 @@
 const express = require('express');
 const cors = require('cors');
-const mysql = require('mysql');
+var _  = require('lodash');
+// const JSON = require('circular-json');
+var fs = require('fs');
 
 const app = express();
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'sous-chef'
-});
+var mockData = [];
 
-connection.connect(err => {
-  if(err) {
-    return err;
-  }
+fs.readFile('./text_files/mock-data.txt', "utf8", function (err, data) {
+  if (err) throw err;
+  mockData = JSON.parse(data);
+  // mockData = data;
 });
 
 app.use(cors());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   const html = `
@@ -26,6 +24,56 @@ app.get('/', (req, res) => {
     </div>
   `;
   res.send(html);
+});
+
+app.post('/records', (req, res) => {
+  console.log(req);
+});
+
+app.get('/records/gender', (req, res) => {
+  if(!mockData){
+    return res.send('Error processing request');
+  } else {
+    var results = _.sortBy(mockData, ['gender']);
+    return res.json({
+      data: results
+    });
+  }
+});
+
+app.get('/records/birthdate', (req, res) => {
+  if(!mockData){
+    return res.send('Error processing request');
+  } else {
+    mockData.forEach((person) => {
+      if(person.dob) {
+        var dateString = person.dob;
+        person.dob = new Date(dateString);
+      }
+    });
+    var results = _.sortBy(mockData, ['dob']);
+    // convert date obj to format mm/dd/yyyy
+    results.forEach((person) => {
+      if(person.dob) {
+        var date = person.dob;
+        person.dob = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+      }
+    });
+    return res.json({
+      data: results
+    });
+  }
+});
+
+app.get('/records/name', (req, res) => {
+  if(!mockData){
+    return res.send('Error processing request');
+  } else {
+    var results = _.sortBy(mockData, ['last']);
+    return res.json({
+      data: results
+    });
+  }
 });
 
 app.listen(4000, () => {
