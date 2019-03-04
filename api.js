@@ -30,8 +30,11 @@ app.post('/records', (req, res) => {
   if(!mockData){
     return res.send('Error processing request');
   } else {
-    mockData.push(req.body);
-    console.log(mockData);
+    if(req.body.length) {
+      req.body.forEach((item) => mockData.push(item));
+    } else {
+      mockData.push(req.body);
+    }
     fs.writeFile(output, JSON.stringify(mockData), function (err) {
       if (err) throw err;
     });
